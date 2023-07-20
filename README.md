@@ -6,6 +6,15 @@ buyers to offer their best price and get a chance to buy the product. The system
 the buyers and sellers, while remaining easy to understand and use. Additionally, the system will also
 provide privileges to the administrator to have complete control of the users and the content posted.
 
+Implementation:
+
+Frontend: HTML, CSS, JavaScript, AJAX
+
+Backend: PHP
+
+Database: MySQL
+
+
 User Interface Screenshots for Buyer:
 
 Creating an account -> All the details filled in the form are inserted to USER table and
