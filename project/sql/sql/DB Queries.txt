@@ -1,0 +1,296 @@
+transactions
+-----------
+
+create table transactions
+(txn_id int not null identity primary key,
+buyer_id int,
+seller_id int,
+product_id int,
+txn_date date,
+txn_amount numeric(10,2),
+shipping_date date,
+buyer_feedback varchar(1000),
+buyer_rating int,
+seller_feedback varchar(1000),
+seller_rating int,
+txn_status char(1),
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+);
+
+
+
+
+
+select * from transactions;
+
+alter table transactions add constraint chk_txnbuyerrating check (buyer_rating >= 0 and buyer_rating <=10);
+alter table transactions add constraint chk_txnsellerrating check (seller_rating >= 0 and seller_rating <=10);
+
+alter table transactions add constraint fk_txnseller foreign key (seller_id) references seller(user_id);
+
+alter table transactions add constraint fk_txnbuyer foreign key (buyer_id) references buyer(user_id);
+
+alter table transactions add constraint fk_txnprod foreign key (product_id) references product(product_id);
+
+
+ 
+phone_info
+---------
+
+
+
+create table phone_info
+(
+user_id int not null,
+phone_number numeric(10),
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+)
+
+
+
+   
+USER_OA
+-------
+
+Create table USER_OA
+(
+User_id int identity,
+Username varchar(50) not null,
+Password varchar(30) not null,
+User_type varchar(10) not null,
+User_status varchar(1) not null,
+Email varchar(100) not null,
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+Primary key (User_id),
+Unique(User_id, Username, User_type),
+Constraint User_type_Value check (User_type in ('Buyer', 'Seller', 'Admin')),
+Constraint User_status_Value check (User_status in ('T','F'))
+);
+
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user1','cncnasicjn!@01','Buyer','T','dbproject1@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user2','cncnasicjn!@02','Buyer','T','dbproject2@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user3','cncnasicjn!@03','Seller','T','dbproject3@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user4','cncnasicjn!@04','Seller','T','dbproject4@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user5','cncnasicjn!@05','Buyer','T','dbproject5@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user6','cncnasicjn!@06','Buyer','T','dbproject6@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user7','cncnasicjn!@07','Seller','T','dbproject7@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user8','cncnasicjn!@08','Seller','T','dbproject8@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user9','cncnasicjn!@09','Buyer','T','dbproject9@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user10','cncnasicjn!@10','Buyer','T','dbproject10@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user11','cncnasicjn!@11','Seller','T','dbproject11@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user12','cncnasicjn!@12','Seller','T','dbproject12@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user13','cncnasicjn!@13','Buyer','T','dbproject13@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user14','cncnasicjn!@14','Buyer','T','dbproject14@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user15','cncnasicjn!@15','Seller','T','dbproject15@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user16','cncnasicjn!@16','Seller','T','dbproject16@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user17','cncnasicjn!@17','Buyer','T','dbproject17@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user18','cncnasicjn!@18','Buyer','T','dbproject18@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user19','cncnasicjn!@19','Seller','T','dbproject19@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user20','cncnasicjn!@20','Seller','T','dbproject20@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user21','cncnasicjn!@21','Buyer','T','dbproject21@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user22','cncnasicjn!@22','Buyer','T','dbproject22@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user23','cncnasicjn!@23','Seller','T','dbproject23@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user24','cncnasicjn!@24','Seller','T','dbproject24@gmail.com');
+insert into USER_OA(Username, Password, User_type, User_status, Email)  values('user30','cncnasicjn!@24','Admin','T','dbproject24@gmail.com');
+
+      
+SELLER 
+-----
+
+Create table SELLER (
+User_id int,
+Company_name varchar(150) not null,
+Company_EIN decimal(9,0) not null,
+Account_type varchar(10) not null,
+Account_number decimal(12,0) not null,
+Routing_number decimal(9,0) not null,
+Primary key (User_id),
+Unique(User_id, Company_EIN),
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate(),
+foreign key(User_id) references USER_OA(User_id) on update cascade
+);
+
+
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(2,'Company1',392772552,'Savings',779358444350,468658268);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(3,'Company2',343149991,'Checking',20163313685,383268813);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(4,'Company3',691370409,'Savings',942585387286,662999247);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(5,'Company4',967706641,'Checking',118211597776,736754910);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(6,'Company5',225303999,'Savings',600617041123,540370007);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(7,'Company6',357849557,'Checking',530951623001,21612078);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(8,'Company7',960193253,'Savings',130680614209,693622447);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(9,'Company8',877354297,'Checking',362789540463,3761827);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(10,'Company9',877982807,'Savings',700448182941,566046334);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(11,'Company10',403037585,'Checking',264012093729,462472964);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(12,'Company11',710256351,'Savings',250714880125,997640174);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(13,'Company12',761849661,'Checking',836167114669,828453431);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(14,'Company13',990669866,'Savings',512075111752,487466922);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(15,'Company14',588352516,'Checking',236572459375,906983322);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(16,'Company15',154272728,'Savings',42863991969,560617193);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(17,'Company16',607332490,'Checking',547919438210,598250133);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(18,'Company17',838690020,'Savings',87462901387,646601072);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(19,'Company18',845307750,'Checking',12357087742,294154478);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(20,'Company19',409101884,'Savings',619868337811,221254768);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(21,'Company20',729574893,'Checking',85679292574,760574699);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(22,'Company21',993683861,'Savings',805041326572,664797905);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(23,'Company22',535014444,'Checking',470701067028,280039387);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(24,'Company23',14800299,'Savings',343468961800,575958606);
+Insert into SELLER(User_id, Company_name, Company_EIN, Account_type, Account_number, Routing_number) values(25,'Company24',481087076,'Checking',4643467446,433719203);
+
+      
+BUYER 
+------
+
+CREATE TABLE BUYER 
+(User_id INT,
+First_name VARCHAR(25) NOT NULL,
+Last_name VARCHAR(25) NOT NULL,
+Date_of_birth DATE NOT NULL,
+SSN CHAR(11) UNIQUE,
+Street_name VARCHAR(25),
+Apartment_number VARCHAR(25),
+City VARCHAR(25),
+State VARCHAR(25),
+Country VARCHAR(25),
+Zip_code INT,
+Card_number INT,
+Card_expiry_date DATE,
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+PRIMARY KEY(User_id),
+FOREIGN KEY(User_id) REFERENCES USER_OA(User_id));
+
+
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (1, 'Tim','Baker', '2000-12-31',123456789,' 800 W Campbell Rd','Apt 1099','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (2, 'John','Baker', '2000-12-31',123456781,' 800 W Campbell Rd','Apt 1091','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (5, 'Carla','Fox', '1996-07-11',345567722,' 122 N Renner Rd','Apt 2411','Richardson','Texas','USA',75077);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (6, 'Peter','Baker', '2000-12-31',123456787,' 800 W Campbell Rd','Apt 1069','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (9, 'Carla','Smith', '1996-07-11',345567786,' 122 N Renner Rd','Apt 2511','Richardson','Texas','USA',75077);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (10, 'Tim','Baker', '2000-12-31',123456788,' 800 W Campbell Rd','Apt 1009','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (13, 'Carla','Omar', '1996-07-11',345567701,' 122 N Renner Rd','Apt 2500','Richardson','Texas','USA',75077);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (14, 'Will','E', '2000-12-31',123406789,' 800 W Campbell Rd','Apt 1299','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (17, 'Keneth','William', '1996-07-11',345567781,'122 N Renner Rd','Apt 3311','Richardson','Texas','USA',75077);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (18, 'Robert','E', '2000-12-31',123456989,' 800 W Campbell Rd','Apt 1599','Richardson','Texas','USA',75080);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (21, 'Sam','William', '1996-07-11',342567781,' 122 N Renner Rd','Apt 8811','Richardson','Texas','USA',75077);
+INSERT INTO BUYER(user_id,first_name,last_name,date_of_birth,SSN,Street_name,Apartment_number,City,State,Country,Zip_code) VALUES (22, 'Kathy','William', '1996-07-11',542567781,' 122 N Renner Rd','Apt 8811','Richardson','Texas','USA',75077);
+
+
+
+
+       
+Admin  
+------
+
+create Table Admin(
+User_id INT,
+employee_id varchar(20) not null,
+PRIMARY KEY(User_id),
+FOREIGN KEY(User_id) REFERENCES USER_OA(User_id));
+
+      
+insert into admin(user_id,employee_id) values (25,'1332019')
+
+CATEGORY     
+--------
+
+Create table CATEGORY(
+Category_id int identity,
+Category_name varchar(100) not null,
+Category_parent int,
+Creation_date datetime not null default getdate(),
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+Primary key(Category_id),
+Foreign key (Category_parent) references CATEGORY(Category_id)
+);
+
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('HARDWARE',null,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('SOFTWARE',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('CLOTHING',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('WINTER CLOTHING',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('SUMMER CLOTHING',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('SECURITY SOFTWARE',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('GAMING SOFTWARE',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('ELECTRONICS',NULL,current_timestamp);
+Insert into CATEGORY(Category_name, Category_parent, Creation_date) values('HEAVY MACHINERY',NULL,current_timestamp);
+
+COMMUNICATION
+-------------
+
+CREATE TABLE COMMUNICATION
+(Message_id INT identity,
+Sender_id INT NOT NULL,
+Receiver_id INT NOT NULL,
+Message VARCHAR(100),
+message_time datetime not null default getdate(),
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+PRIMARY KEY(Message_id),
+FOREIGN KEY(Sender_id) REFERENCES USER_OA(user_id),
+FOREIGN KEY(Receiver_id) REFERENCES USER_OA(user_id));
+
+
+INSERT INTO COMMUNICATION(Sender_id, Receiver_id, Message)
+VALUES
+(1,4,'Hi.The product was really nice. Thanks a lot!');
+
+INSERT INTO COMMUNICATION(Sender_id, Receiver_id, Message)
+VALUES
+(4,1,'Hi.I am glad that you are happy with the product.');
+
+
+product    
+-------
+
+create Table product(
+product_id int identity primary key,
+product_name varchar(25) not null,
+product_description varchar(500),
+posting_date datetime not null,
+increment_value int not null,
+auction_startdate date not null,
+auction_enddate date not null,
+base_price numeric(10,2) not null,
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate()
+)
+
+insert into product(product_name,product_description,posting_date,increment_value,auction_startdate,auction_enddate,base_price) values
+('Dell G3 15','high-performance Alienware Gaming laptop','2021-10-28','500','2021-10-29','2021-11-5','4000');
+
+insert into product(product_name,product_description,posting_date,increment_value,auction_startdate,auction_enddate,base_price) values
+('Iphone 13 pro',' triple-lens camera systems with improved Wide, Ultra Wide, and Telephoto lenses and higher-end photography options like macro capabilities,and the ProRes video format','2021-10-28','50','2021-10-29','2021-11-5','800');
+
+insert into product(product_name,product_description,posting_date,increment_value,auction_startdate,auction_enddate,base_price) values
+(
+'Iphone SE',' budget friendly mobile','2021-10-28','50','2021-10-29','2021-11-5','400');
+
+insert into product(product_name,product_description,posting_date,increment_value,auction_startdate,auction_enddate,base_price) values
+(
+'Toyota Camry','remendous reliability and strong resale value','2021-10-28','1000','2021-10-29','2021-11-5','20000'
+)
+
+insert into product(product_name,product_description,posting_date,increment_value,auction_startdate,auction_enddate,base_price) values
+(
+'Mustang','powerful muscle car','2021-10-28','1500','2021-10-29','2021-11-5','35000')
+;
+
+
+  
+bid          
+----
+
+create Table bid(
+bid_id int not null identity primary key,
+buyer_id int not null,
+product_id int not null,
+bid_amount numeric(10,2) not null,
+bid_time datetime not null, 
+del_flag char(1) not null default 'N',
+last_mdfcn_date datetime not null default getdate(),
+foreign key (buyer_id) references buyer(user_id),
+foreign key (product_id) references product(product_id)
+);
