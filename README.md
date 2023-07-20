@@ -1,4 +1,5 @@
-#Online-Auction-System
+# Online-Auction-System
+
 This software system will be an Online Auction System, to be used by sellers to advertise their
 products and for potential buyer to submit their bids, with the highest bidder automatically being
 selected as the buyer. This system will be designed to provide a platform for the sellers to find the
