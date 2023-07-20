@@ -1,6 +1,7 @@
 This software system will be an Online Auction System, to be used by sellers to advertise their products and for potential buyer to submit their bids, with the highest bidder automatically being selected as the buyer. This system will be designed to provide a platform for the sellers to find the best price for their products. At the same time, it will provide a fair opportunity to all the potential buyers to offer their best price and get a chance to buy the product. The system will meet the needs of the buyers and sellers, while remaining easy to understand and use. Additionally, the system will also provide privileges to the administrator to have complete control of the users and the content posted.
 
 User Interface Screenshots for Buyer:
+
 Creating an account -> All the details filled in the form are inserted to USER table and BUYER/SELLER depending on the values selected when creating account.
 
 
